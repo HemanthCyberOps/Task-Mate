@@ -42,8 +42,6 @@ body{
     text-align: center;
 }
 
-
-
 .form-group{
     margin-bottom: 20px;
     text-align: center;
@@ -52,9 +50,14 @@ body{
 .form-group label{
     display: block;
     text-align: left;
-    font-weight: 500;
+    font-weight: 600;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin-bottom: 6px;
     color: #333;
+}
+
+.form-group input::placeholder{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .form-group input{
@@ -65,7 +68,25 @@ body{
     padding: 15px 20px;
 }
 
-.form-group input:focus {
-    border-color: #5563DE;  /* Highlight border on focus */
-    box-shadow: 0 0 5px rgba(85, 99, 222, 0.3);
+.form-group #login-subimt{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 2px;
+    background-color: #535252;
+    color: #ffffff;
+}
+
+.form-group #login-subimt:hover{
+    background-color: #000000;
+    transition: 0.7s ease;
+}
+
+.toggle-text{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15px;
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.toggle-text span{
+    color: blue;
 }
