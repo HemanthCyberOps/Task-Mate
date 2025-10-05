@@ -1,3 +1,6 @@
 body{
     background-color: rgb(236, 214, 214);
 }
+#auth-container{
+    background-color: bisque;
+}
