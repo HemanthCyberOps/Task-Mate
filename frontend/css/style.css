@@ -34,12 +34,22 @@ body{
     letter-spacing: 2px;
 }
 
+#signup-form h2{
+    font-size: 40px;
+    font-family:'Courier New', Courier, monospace;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
 .form-box{
     width: 350px;
     margin: 30px 25px;
     padding: 30px;
     box-shadow: 0px 4px 20px rgba(0,0,0,0.2);
     text-align: center;
+    border-radius: 15px;
 }
 
 .form-group{
@@ -68,14 +78,29 @@ body{
     padding: 15px 20px;
 }
 
-.form-group #login-subimt{
+.form-group #login-submit{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     letter-spacing: 2px;
     background-color: #535252;
     color: #ffffff;
+    cursor: pointer;
 }
 
-.form-group #login-subimt:hover{
+.form-group #sign-up-submit{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 2px;
+    background-color: #535252;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+
+.form-group #login-submit:hover{
+    background-color: #000000;
+    transition: 0.7s ease;
+}
+
+.form-group #sign-up-submit:hover{
     background-color: #000000;
     transition: 0.7s ease;
 }
@@ -88,5 +113,13 @@ body{
 }
 
 .toggle-text span{
-    color: blue;
+    color: rgb(30, 30, 196);
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.toggle-text span:hover{
+    color: #0044ff;
+    text-decoration: underline;
 }
