@@ -99,8 +99,6 @@ body {
   background: #000;
 }
 
-.hidden { display: none; }
-
 /* Dashboard sections */
 #add-task-section,
 #your-task-section {
@@ -128,13 +126,6 @@ body {
   border: 1px solid #ccc;
 }
 
-#add-task-form button {
-  background: #535252;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
 #tasks {
   list-style: none;
   padding: 0;
@@ -154,7 +145,8 @@ body {
 .task-datetime-wrapper {
   display: flex;
   flex-direction: column;
-  width: 320px; /* match form inputs */
+  width: 320px; 
+  position: relative; 
 }
 
 .task-datetime-wrapper label {
@@ -164,32 +156,25 @@ body {
   font-size: 14px;
 }
 
-#task-datetime {
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  color: #333;
-  background-color: #fdfdfd;
-  transition: all 0.3s ease;
-}
-
-#task-datetime:focus {
-  border-color: #535252;
-  box-shadow: 0 0 6px rgba(83, 82, 82, 0.3);
-  outline: none;
-}
 
 /* --- JARVIS-style subtle effects --- */
 
-/* Hover glow for Add Task button */
 #add-task-form button {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  background: #535252;
+  color: white;
+  cursor: pointer;
   transition: 0.3s all ease;
 }
+
 #add-task-form button:hover {
   box-shadow: 0 0 12px rgba(83, 82, 82, 0.6);
   transform: translateY(-2px);
 }
+
 
 /* Hover glow for Delete buttons */
 .delete-task {
@@ -252,9 +237,10 @@ input, select, button, #tasks li, #profile-icon, #profile-edit-overlay {
   transition: all 0.3s ease;
 }
 
-#date-picker table {
+#date-picker table { 
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
   text-align: center;
 }
 
@@ -265,11 +251,17 @@ input, select, button, #tasks li, #profile-icon, #profile-edit-overlay {
 }
 
 #date-picker td {
+  vertical-align: middle;
+  text-align: center;
   padding: 10px 0;
+  margin: 0;
+  width: 14.28%;
+  box-sizing: border-box;
   cursor: pointer;
   border-radius: 6px;
   transition: all 0.25s ease-in-out;
 }
+
 
 #date-picker td:hover {
   background-color: #535252;
@@ -391,21 +383,6 @@ input, select, button, #tasks li, #profile-icon, #profile-edit-overlay {
   pointer-events: auto;
 }
 
-.task-datetime-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 320px;
-  position: relative; /* make pickers appear correctly */
-}
-
-
-#date-picker table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: center;
-  table-layout: fixed;
-}
-
 #date-picker th,
 #date-picker td {
   padding: 10px 0;
@@ -429,15 +406,99 @@ input, select, button, #tasks li, #profile-icon, #profile-edit-overlay {
   border-radius: 6px;
 }
 
-#date-picker table { 
+input, select, button, #tasks li, #profile-icon, #profile-edit-overlay {
+  transition: all 0.25s ease-in-out;
+}
+
+/* Calendar Header */
+.calendar-header {
+  display: flex;
+  justify-content: space-between; /* buttons at edges */
+  align-items: center;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #535252;
+  background: #f0f0f0; /* optional subtle bg */
+  border-radius: 8px;
+}
+
+/* Month Buttons */
+.month-btn {
+  background: #fff;        /* button bg */
+  border: 1px solid #ccc;  /* subtle border */
+  font-size: 18px;
+  color: #535252;
+  cursor: pointer;
+  width: 40px;             /* fixed width */
+  height: 40px;            /* fixed height */
+  border-radius: 50%;      /* circular buttons */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.month-btn:hover {
+  background: #535252;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* Month Label */
+.month-label {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  flex-grow: 1;           /* take remaining space */
+  margin: 0 10px;         /* spacing from buttons */
+}
+
+.custom-dropdown {
+  position: relative;
   width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-  text-align: center;
+  font-size: 14px;
+  color: #535252;
 }
 
-#date-picker td {
-  vertical-align: middle;
-  text-align: center;
+.dropdown-selected {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  padding: 10px 12px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+.dropdown-selected:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  transform: translateY(-1px);
+}
+
+.dropdown-options {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  padding: 8px 0;
+  z-index: 1000;
+}
+
+.dropdown-option {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+}
+
+.dropdown-option:hover {
+  background: #535252;
+  color: #fff;
+  transform: scale(1.05);
+  border-radius: 8px;
+}

@@ -48,6 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
       profileDropdown.classList.add("hidden");
       profileIcon.setAttribute("aria-expanded", "false");
     }
+    if (!datePicker.contains(e.target) && e.target !== taskDate)
+      datePicker.classList.add("hidden");
+    if (!timePicker.contains(e.target) && e.target !== taskTime)
+      timePicker.classList.add("hidden");
   });
 
   profileDropdown.addEventListener("click", (e) => e.stopPropagation());
@@ -65,9 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const taskDescription = document.getElementById("task-description");
   const taskDate = document.getElementById("task-date");
   const taskTime = document.getElementById("task-time");
-  const taskPriority = document.getElementById("task-priority");
-  const taskStatus = document.getElementById("task-status");
   const tasksList = document.getElementById("tasks");
+
+  let taskPriorityValue = "";
+  let taskStatusValue = "";
 
   let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
@@ -98,50 +103,85 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
       tasksList.appendChild(li);
     });
+  }
 
-    document.querySelectorAll(".delete-task").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        const index = e.target.dataset.index;
-        tasks.splice(index, 1);
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-        renderTasks();
+  tasksList.addEventListener("click", (e) => {
+    if (e.target.classList.contains("delete-task")) {
+      const index = e.target.dataset.index;
+      tasks.splice(index, 1);
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      renderTasks();
+    }
+  });
+
+  renderTasks();
+
+  // --------- CUSTOM DROPDOWNS ---------
+  document.querySelectorAll(".custom-dropdown").forEach((dropdown) => {
+    const selected = dropdown.querySelector(".dropdown-selected");
+    const options = dropdown.querySelector(".dropdown-options");
+
+    selected.addEventListener("click", () => {
+      options.classList.toggle("hidden");
+    });
+
+    options.querySelectorAll(".dropdown-option").forEach((option) => {
+      option.addEventListener("click", () => {
+        selected.textContent = option.textContent;
+        options.classList.add("hidden");
+
+        // Set values
+        if (dropdown.id === "task-priority-dropdown") {
+          taskPriorityValue = option.dataset.value;
+        } else if (dropdown.id === "task-status-dropdown") {
+          taskStatusValue = option.dataset.value;
+        }
       });
     });
-  }
+
+    document.addEventListener("click", (e) => {
+      if (!dropdown.contains(e.target)) options.classList.add("hidden");
+    });
+  });
 
   // --------- CUSTOM DATE PICKER ---------
   const datePicker = document.getElementById("date-picker");
+  let currentMonth = new Date().getMonth();
+  let currentYear = new Date().getFullYear();
 
   taskDate.addEventListener("click", (e) => {
     e.stopPropagation();
     datePicker.classList.toggle("hidden");
-    generateCalendar(new Date());
+    renderCalendar(currentYear, currentMonth);
   });
 
-  function generateCalendar(currentDate) {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
+  function renderCalendar(year, month) {
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const tableParts = [];
 
-    tableParts.push("<table>");
-    tableParts.push("<tr>");
-    for (let d of days) tableParts.push(`<th>${d}</th>`);
-    tableParts.push("</tr><tr>");
+    let html = `
+      <div class="calendar-header">
+        <button id="prev-month" class="month-btn" title="Previous Month">&lt;</button>
+        <span class="month-label">${new Date(year, month).toLocaleString(
+          "default",
+          { month: "long", year: "numeric" }
+        )}</span>
+        <button id="next-month" class="month-btn" title="Next Month">&gt;</button>
+      </div>`;
 
-    for (let i = 0; i < firstDay; i++) tableParts.push("<td></td>");
+    html += "<table><tr>";
+    for (let d of days) html += `<th>${d}</th>`;
+    html += "</tr><tr>";
 
+    for (let i = 0; i < firstDay; i++) html += "<td></td>";
     for (let day = 1; day <= daysInMonth; day++) {
-      tableParts.push(`<td>${day}</td>`);
-      if ((day + firstDay) % 7 === 0) tableParts.push("</tr><tr>");
+      html += `<td>${day}</td>`;
+      if ((day + firstDay) % 7 === 0) html += "</tr><tr>";
     }
+    html += "</tr></table>";
 
-    tableParts.push("</tr></table>");
-
-    datePicker.innerHTML = tableParts.join(""); // join without extra whitespace
+    datePicker.innerHTML = html;
 
     datePicker.querySelectorAll("td").forEach((cell) => {
       if (cell.textContent) {
@@ -154,6 +194,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
     });
+
+    document.getElementById("prev-month").addEventListener("click", () => {
+      month--;
+      if (month < 0) {
+        month = 11;
+        year--;
+      }
+      renderCalendar(year, month);
+    });
+
+    document.getElementById("next-month").addEventListener("click", () => {
+      month++;
+      if (month > 11) {
+        month = 0;
+        year++;
+      }
+      renderCalendar(year, month);
+    });
   }
 
   // --------- CUSTOM TIME PICKER ---------
@@ -163,17 +221,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const timeDisplay = document.getElementById("time-display");
   const timeSetBtn = document.getElementById("time-set");
 
-  taskTime.addEventListener("click", (e) => {
-    e.stopPropagation(); // <-- important
-    timePicker.classList.toggle("hidden");
-    updateTimeDisplay();
-  });
-
   function updateTimeDisplay() {
     const hh = String(hourSlider.value).padStart(2, "0");
     const mm = String(minuteSlider.value).padStart(2, "0");
     timeDisplay.textContent = `${hh}:${mm}`;
   }
+
+  taskTime.addEventListener("click", (e) => {
+    e.stopPropagation();
+    timePicker.classList.toggle("hidden");
+    updateTimeDisplay();
+  });
 
   hourSlider.addEventListener("input", updateTimeDisplay);
   minuteSlider.addEventListener("input", updateTimeDisplay);
@@ -183,7 +241,6 @@ document.addEventListener("DOMContentLoaded", () => {
     timePicker.classList.add("hidden");
   });
 
-  // --------- CLOSE PICKERS WHEN CLICKING OUTSIDE ---------
   datePicker.addEventListener("click", (e) => e.stopPropagation());
   timePicker.addEventListener("click", (e) => e.stopPropagation());
 
@@ -194,20 +251,32 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Please select both date and time");
       return;
     }
+    if (!taskPriorityValue || !taskStatusValue) {
+      alert("Please select priority and status");
+      return;
+    }
+
     const [dd, mm, yyyy] = taskDate.value.split("-");
     const datetimeISO = `${yyyy}-${mm}-${dd}T${taskTime.value}`;
+
     const newTask = {
       title: taskTitle.value,
       description: taskDescription.value,
       datetime: datetimeISO,
-      priority: taskPriority.value,
-      status: taskStatus.value,
+      priority: taskPriorityValue,
+      status: taskStatusValue,
     };
+
     tasks.push(newTask);
     localStorage.setItem("tasks", JSON.stringify(tasks));
     renderTasks();
     addTaskForm.reset();
-  });
 
-  renderTasks();
+    // Reset custom dropdown display
+    document.querySelectorAll(".custom-dropdown .dropdown-selected").forEach(
+      (sel) => (sel.textContent = sel.id.includes("priority") ? "Select Priority" : "Select Status")
+    );
+    taskPriorityValue = "";
+    taskStatusValue = "";
+  });
 });

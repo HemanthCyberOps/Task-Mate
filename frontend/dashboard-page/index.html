@@ -21,6 +21,7 @@
             alt="Profile"
             role="button"
             aria-expanded="false"
+            tabindex="0"
           />
           <!-- Edit overlay -->
           <div id="profile-edit-overlay" title="Change Profile Picture">✎</div>
@@ -40,7 +41,7 @@
           aria-label="Profile menu"
         >
           <p id="profile-username">Hello, User!</p>
-          <button id="logout-button">Log Out</button>
+          <button id="logout-button" type="button">Log Out</button>
         </div>
       </div>
     </header>
@@ -58,32 +59,52 @@
 
         <div class="task-datetime-wrapper">
           <label for="task-date">Due Date</label>
-          <input type="text" id="task-date" placeholder="DD-MM-YYYY" readonly />
+          <input
+            type="text"
+            id="task-date"
+            placeholder="Select date"
+            readonly
+            value=""
+          />
           <div id="date-picker" class="custom-picker hidden"></div>
         </div>
 
         <div class="task-datetime-wrapper">
           <label for="task-time">Due Time</label>
-          <input type="text" id="task-time" placeholder="--:--" readonly />
+          <input
+            type="text"
+            id="task-time"
+            placeholder="Select time"
+            readonly
+            value=""
+          />
           <div id="time-picker" class="custom-picker hidden">
             <input type="range" id="time-hour" min="0" max="23" value="12" />
             <input type="range" id="time-minute" min="0" max="59" value="30" />
             <div id="time-display">12:30</div>
-            <button id="time-set">Set Time</button>
+            <button id="time-set" type="button">Set Time</button>
           </div>
         </div>
 
-        <select id="task-priority" required>
-          <option value="" disabled selected>Priority</option>
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-        </select>
+        <div class="custom-dropdown" id="task-priority-dropdown">
+          <div class="dropdown-selected" tabindex="0">Select Priority</div>
+          <div class="dropdown-options hidden">
+            <div class="dropdown-option" data-value="low">Low</div>
+            <div class="dropdown-option" data-value="medium">Medium</div>
+            <div class="dropdown-option" data-value="high">High</div>
+          </div>
+        </div>
 
-        <select id="task-status">
-          <option value="PENDING" selected>Status (Default Pending)</option>
-          <option value="DONE">Done</option>
-        </select>
+        <div class="custom-dropdown" id="task-status-dropdown">
+          <div class="dropdown-selected" tabindex="0">Select Status</div>
+          <div class="dropdown-options hidden">
+            <div class="dropdown-option" data-value="todo">To Do</div>
+            <div class="dropdown-option" data-value="in-progress">
+              In Progress
+            </div>
+            <div class="dropdown-option" data-value="done">Done</div>
+          </div>
+        </div>
 
         <button type="submit">Add Task</button>
       </form>
