@@ -1,13 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Dashboard</title>
-        <link rel="stylesheet" href="../css/dashboard.css">
-        <script src="../js/dashboard.js" defer></script>
-    </head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
 
-    <body>
-        <h1 id="home-page">Dashboard</h1>
-    </body>
+  <body>
+    <!--Profile Section-->
+    <header class="site-header">
+      <h1 id="home-page">Task Mate Dashboard</h1>
+
+      <!-- PROFILE CONTAINER -->
+      <div id="profile-container">
+        <div id="profile-wrapper">
+          <img
+            id="profile-icon"
+            src="default-profile.png"
+            alt="Profile"
+            role="button"
+            aria-controls="profile-dropdown"
+          />
+          <!-- Edit overlay -->
+          <div id="profile-edit-overlay" title="Change Profile Picture">✎</div>
+          <input
+            type="file"
+            id="profile-upload"
+            accept="image/*"
+            style="display: none"
+          />
+        </div>
+
+        <!-- Dropdown -->
+        <div
+          id="profile-dropdown"
+          class="hidden"
+          role="menu"
+          aria-labelledby="profile-button"
+        >
+          <p id="profile-username">Hello, User!</p>
+          <button id="logout-button">Log Out</button>
+        </div>
+      </div>
+    </header>
+
+    <!--Add New Task-->
+    <section id="add-task-section">
+      <h2>Add New Task</h2>
+      <form id="add-task-form">
+        <input
+          type="text"
+          id="task-title"
+          placeholder="Enter Your Task"
+          required
+        />
+        <input type="datetime-local" id="task-determine" required />
+        <input
+          type="text"
+          id="task-description"
+          placeholder="Description (Optional)"
+        />
+        <button type="submit">Add Task</button>
+      </form>
+    </section>
+
+    <!--List All Tasks-->
+    <section id="your-task-section">
+      <h2>Your Tasks</h2>
+      <ul id="tasks"></ul>
+    </section>
+  </body>
 </html>
