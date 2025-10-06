@@ -5,15 +5,14 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Header container: keep title centered; profile absolute on right */
+/* Header */
 .site-header {
-  position: relative;             /* so profile-container can be positioned relative to header */
-  padding: 30px 40px;             /* space around header */
-  background: #ffffff;
+  position: relative;
+  padding: 30px 40px;
+  background: #fff;
   box-shadow: 0 4px 18px rgba(0,0,0,0.06);
 }
 
-/* Title stays centered */
 #home-page {
   margin: 0;
   text-align: center;
@@ -22,73 +21,20 @@ body {
   color: #222;
 }
 
-/* Profile container: position top-right (center vertically inside header) */
+/* Profile container */
 #profile-container {
   position: absolute;
-  top: 50%;                       /* vertically center relative to header */
-  right: 40px;                    /* distance from right edge */
-  transform: translateY(-50%);    /* perfect center */
+  top: 50%;
+  right: 40px;
+  transform: translateY(-50%);
 }
 
-/* Profile button (removes default button chrome) */
-#profile-button {
-  border: none;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-  display: inline-block;
-  border-radius: 50%;
-}
-
-/* Profile icon circle */
-#profile-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #535252;
-  display: block;
-}
-
-/* Dropdown menu (initially hidden via .hidden class) */
-#profile-dropdown {
-  position: absolute;
-  top: calc(100% + 10px);         /* below the icon */
-  right: 0;
-  width: 210px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-  padding: 12px;
-  z-index: 999;
-}
-
-/* Dropdown text and button */
-#profile-dropdown p {
-  margin: 0 0 8px 0;
-  font-weight: 600;
-}
-#profile-dropdown button {
-  width: 100%;
-  padding: 8px 10px;
-  border: none;
-  border-radius: 8px;
-  background: #535252;
-  color: #fff;
-  cursor: pointer;
-}
-#profile-dropdown button:hover {
-  background: #000; 
-}
-
-/* Wrapper for profile + overlay */
 #profile-wrapper {
   position: relative;
   width: 56px;
   height: 56px;
 }
 
-/* Profile icon circle */
 #profile-icon {
   width: 100%;
   height: 100%;
@@ -96,14 +42,14 @@ body {
   object-fit: cover;
   border: 2px solid #535252;
   display: block;
+  cursor: pointer;
 }
 
-/* Edit overlay (outside bottom-right, scales with profile size) */
 #profile-edit-overlay {
   position: absolute;
-  bottom: 0%;  /* aligned to bottom */
-  right: 0%;   /* aligned to right */
-  transform: translate(50%, 50%); /* moves it outside the circle */
+  bottom: 0;
+  right: 0;
+  transform: translate(50%, 50%);
   background: #535252;
   color: #fff;
   font-size: 14px;
@@ -122,52 +68,376 @@ body {
   background: #000;
 }
 
+#profile-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 210px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  padding: 12px;
+  z-index: 999;
+}
 
-/* hide helper */
+#profile-dropdown p {
+  margin: 0 0 8px 0;
+  font-weight: 600;
+}
+
+#profile-dropdown button {
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  background: #535252;
+  color: #fff;
+  cursor: pointer;
+}
+
+#profile-dropdown button:hover {
+  background: #000;
+}
+
 .hidden { display: none; }
 
-/* --- Basic rest of dashboard styles (keeps page usable) --- */
-main { 
-    max-width: 900px; 
-    margin: 30px auto; 
-    padding: 0 20px; 
-}
-#add-task-section, #your-task-section {
-  background: #fff; 
-  margin-bottom: 20px; 
-  padding: 20px; 
+/* Dashboard sections */
+#add-task-section,
+#your-task-section {
+  background: #fff;
+  margin: 20px auto;
+  padding: 25px 30px;        
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  max-width: 800px;          
+  width: 90%;                
 }
 
-#add-task-form { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 10px; 
-    align-items:center; 
+
+#add-task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
 }
-#add-task-form input, #add-task-form button { 
-    width: 320px; 
-    padding: 10px 12px; 
-    border-radius: 10px; 
-    border: 1px solid #ccc; 
+
+#add-task-form input, #add-task-form select, #add-task-form button {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
 }
-#add-task-form button { 
-    background: #535252; 
-    color: white; 
-    border: none; 
-    cursor: pointer; 
+
+#add-task-form button {
+  background: #535252;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
-#tasks { 
-    list-style:none; 
-    padding:0; 
-    margin:0; }
-#tasks li { 
-    padding: 10px; 
-    border-radius: 8px; 
-    background:#f5f5f5; 
-    margin-bottom:10px; 
-    display:flex; 
-    justify-content:space-between; 
-    align-items:center; 
+
+#tasks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
+
+#tasks li {
+  padding: 10px;
+  border-radius: 8px;
+  background: #f5f5f5;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-datetime-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 320px; /* match form inputs */
+}
+
+.task-datetime-wrapper label {
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+#task-datetime {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  color: #333;
+  background-color: #fdfdfd;
+  transition: all 0.3s ease;
+}
+
+#task-datetime:focus {
+  border-color: #535252;
+  box-shadow: 0 0 6px rgba(83, 82, 82, 0.3);
+  outline: none;
+}
+
+/* --- JARVIS-style subtle effects --- */
+
+/* Hover glow for Add Task button */
+#add-task-form button {
+  transition: 0.3s all ease;
+}
+#add-task-form button:hover {
+  box-shadow: 0 0 12px rgba(83, 82, 82, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Hover glow for Delete buttons */
+.delete-task {
+  transition: 0.2s all ease;
+}
+.delete-task:hover {
+  box-shadow: 0 0 8px rgba(255, 77, 77, 0.8);
+  transform: scale(1.05);
+}
+
+/* Profile icon hover */
+#profile-icon:hover {
+  box-shadow: 0 0 10px rgba(83, 82, 82, 0.5);
+  transform: scale(1.05);
+}
+
+/* Profile edit overlay hover glow (already dark bg) */
+#profile-edit-overlay:hover {
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+  transform: translate(50%, 50%) scale(1.1);
+}
+
+/* Task list hover highlight */
+#tasks li:hover {
+  box-shadow: 0 0 12px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+}
+
+/* Smooth transitions for all interactive elements */
+input, select, button, #tasks li, #profile-icon, #profile-edit-overlay {
+  transition: all 0.25s ease-in-out;
+}
+
+/* Common for pickers */
+.custom-picker {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  padding: 15px;
+  z-index: 1000;
+}
+
+/* Hide initially */
+.hidden { display: none; }
+
+/* Calendar Picker */
+#date-picker {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  padding: 15px;
+  max-width: 300px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+#date-picker table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+#date-picker th {
+  font-weight: bold;
+  padding: 8px 0;
+  color: #535252;
+}
+
+#date-picker td {
+  padding: 10px 0;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.25s ease-in-out;
+}
+
+#date-picker td:hover {
+  background-color: #535252;
+  color: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(83,82,82,0.5);
+}
+
+/* Time Picker Container */
+#time-picker {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 280px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  padding: 15px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* Time Display */
+#time-display {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #222;
+  letter-spacing: 1px;
+}
+
+/* Range Sliders */
+#time-picker input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px; /* track height */
+  border-radius: 5px;
+  background: #eee;
+  outline: none;
+  margin: 8px 0;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* WebKit browsers (Chrome, Safari) */
+#time-picker input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #535252;
+  border: 2px solid #fff;
+  margin-top: -6px; /* (thumb height - track height) / 2 = (20-8)/2 = 6px */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#time-picker input[type="range"]::-webkit-slider-thumb:hover {
+  background: #000;
+  transform: scale(1.2);
+  box-shadow: 0 0 8px rgba(0,0,0,0.5);
+}
+
+/* Firefox */
+#time-picker input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #535252;
+  border: 2px solid #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Optional: for IE */
+#time-picker input[type="range"]::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #535252;
+  border: 2px solid #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+/* Set Button */
+#time-set {
+  width: 100%;
+  padding: 8px 0;
+  border: none;
+  border-radius: 8px;
+  background: #535252;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.25s ease-in-out;
+}
+
+#time-set:hover {
+  background: #000;
+  box-shadow: 0 0 12px rgba(83,82,82,0.6);
+  transform: translateY(-2px);
+}
+
+/* Smooth show/hide transitions */
+#date-picker,
+#time-picker {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+#date-picker:not(.hidden),
+#time-picker:not(.hidden) {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.task-datetime-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  position: relative; /* make pickers appear correctly */
+}
+
+
+#date-picker table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  table-layout: fixed;
+}
+
+#date-picker th,
+#date-picker td {
+  padding: 10px 0;
+  margin: 0;
+  width: 14.28%;
+  box-sizing: border-box;
+}
+
+
+#date-picker td:empty {
+  background: none;
+  cursor: default;
+  pointer-events: none;
+}
+
+#date-picker td:not(:empty):hover {
+  background-color: #535252;
+  color: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(83,82,82,0.5);
+  border-radius: 6px;
+}
+
+#date-picker table { 
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: center;
+}
+
+#date-picker td {
+  vertical-align: middle;
+  text-align: center;
+}
+

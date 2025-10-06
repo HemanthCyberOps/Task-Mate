@@ -2,13 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Dashboard</title>
+    <title>Task Mate Dashboard</title>
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
   </head>
 
   <body>
-    <!--Profile Section-->
+    <!-- Profile Section -->
     <header class="site-header">
       <h1 id="home-page">Task Mate Dashboard</h1>
 
@@ -20,7 +20,7 @@
             src="default-profile.png"
             alt="Profile"
             role="button"
-            aria-controls="profile-dropdown"
+            aria-expanded="false"
           />
           <!-- Edit overlay -->
           <div id="profile-edit-overlay" title="Change Profile Picture">✎</div>
@@ -37,7 +37,7 @@
           id="profile-dropdown"
           class="hidden"
           role="menu"
-          aria-labelledby="profile-button"
+          aria-label="Profile menu"
         >
           <p id="profile-username">Hello, User!</p>
           <button id="logout-button">Log Out</button>
@@ -45,27 +45,51 @@
       </div>
     </header>
 
-    <!--Add New Task-->
+    <!-- Add New Task -->
     <section id="add-task-section">
       <h2>Add New Task</h2>
       <form id="add-task-form">
-        <input
-          type="text"
-          id="task-title"
-          placeholder="Enter Your Task"
-          required
-        />
-        <input type="datetime-local" id="task-determine" required />
+        <input type="text" id="task-title" placeholder="Task Title" required />
         <input
           type="text"
           id="task-description"
           placeholder="Description (Optional)"
         />
+
+        <div class="task-datetime-wrapper">
+          <label for="task-date">Due Date</label>
+          <input type="text" id="task-date" placeholder="DD-MM-YYYY" readonly />
+          <div id="date-picker" class="custom-picker hidden"></div>
+        </div>
+
+        <div class="task-datetime-wrapper">
+          <label for="task-time">Due Time</label>
+          <input type="text" id="task-time" placeholder="--:--" readonly />
+          <div id="time-picker" class="custom-picker hidden">
+            <input type="range" id="time-hour" min="0" max="23" value="12" />
+            <input type="range" id="time-minute" min="0" max="59" value="30" />
+            <div id="time-display">12:30</div>
+            <button id="time-set">Set Time</button>
+          </div>
+        </div>
+
+        <select id="task-priority" required>
+          <option value="" disabled selected>Priority</option>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+
+        <select id="task-status">
+          <option value="PENDING" selected>Status (Default Pending)</option>
+          <option value="DONE">Done</option>
+        </select>
+
         <button type="submit">Add Task</button>
       </form>
     </section>
 
-    <!--List All Tasks-->
+    <!-- List All Tasks -->
     <section id="your-task-section">
       <h2>Your Tasks</h2>
       <ul id="tasks"></ul>
